@@ -7,12 +7,16 @@ erDiagram
 	Song {
 		int id PK
 		string name
-		int length "in secs"
 	}
 	%% Artist = Interpret
 	Artist {
 		int id PK
 		string name
+	}
+	Track {
+		int song_id FK
+		int artist_id FK
+		int length "in secs"
 	}
 	CD {
 		int id PK
@@ -23,26 +27,21 @@ erDiagram
 		int id PK
 		string name UK
 	}
-	Song-to-CD {
+	Track-to-CD {
 		int id PK
-		int song_id FK
+		int track_id FK
 		int cd_id FK
 		int sort_order
-	}
-	Song-to-Artist {
-		int id PK
-		int song_id FK
-		int artist_id FK 
 	}
 	Genre-to-CD {
 		int id PK
 		int cd_id FK
 		int genre_id FK
 	}
-	Song ||--|{ Song-to-CD :"in"
-	CD ||--|{ Song-to-CD :"contains"
-	Song ||--|{ Song-to-Artist :"belongs to"
-	Artist ||--|{ Song-to-Artist :"wrote"
+	Track ||--|{ Song :"belongs to"
+	Artist ||--|{ Track:"sings"
+	CD ||--|{ Track-to-CD :"contains"
+	Track ||--|{ Track-to-CD :"in"
 	Genre ||--|{ Genre-to-CD :"has"
 	CD ||--|{ Genre-to-CD :"has"
 ```
