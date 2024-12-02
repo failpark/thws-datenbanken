@@ -20,6 +20,7 @@ erDiagram
 		int game_id FK
 	}
 	game {
+		int id PK
 		int home FK
 		int away FK
 		date date
@@ -27,8 +28,16 @@ erDiagram
 		int goals_away
 	}
 
+	game-to-player {
+		int id PK
+		int player_id FK
+		int game_id FK
+	}
+
 	player }|--|| team: "belongs to"
 	referee ||--|{ referee-to-game: "supervises"
 	game ||--|{ referee-to-game: "has"
 	team ||--|{ game :"plays"
+	game ||--|{ game-to-player :"has"
+	player ||--|{ game-to-player :"plays"
 ```
